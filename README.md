@@ -12,6 +12,7 @@ This project implements a CRUD (Create, Read, Update, Delete) API for managing e
 ## Features
 
 - Get all employees (`GET /employees`)
+- Get a single employee (`GET /employees/{employee_id}`)
 - Add a new employee (`POST /employees`)
 - Update an existing employee (`PUT /employees/{employee_id}`)
 - Delete an employee (`DELETE /employees/{employee_id}`)
@@ -65,6 +66,14 @@ GET /employees
 ```
 Returns a list of all employees in the database.
 
+### Get Employee by ID
+```http
+GET /employees/{employee_id}
+```
+Returns a single employee matching the given `employee_id`.
+
+**Response: `404 Not Found`** if no employee matches the provided ID.
+
 ### Add New Employee
 ```http
 POST /employees
@@ -112,6 +121,9 @@ Using curl:
 # Get all employees
 curl http://localhost:8000/employees
 
+# Get employee by ID
+curl http://localhost:8000/employees/1
+
 # Add new employee
 curl -X POST http://localhost:8000/employees \
   -H "Content-Type: application/json" \
@@ -131,6 +143,8 @@ curl -X DELETE http://localhost:8000/employees/1
 - This API uses the Supabase `employees` table which should have columns matching the employee model
 - The API automatically reloads on code changes when run with `--reload`
 - For production use, consider removing `--reload` and using a proper ASGI server
+- Creation of a new employee returns HTTP status `201 Created`
+- Individual lookups, updates, and deletes return HTTP status `404 Not Found` when the record does not exist
 
 ## License
 
